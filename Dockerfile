@@ -1,5 +1,5 @@
 
 FROM alpine:latest
-RUN apt-get update
+RUN apk update
 CMD ["echo", "Hello from Docker!"]
 
