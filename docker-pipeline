@@ -25,6 +25,10 @@ pipeline {
         }
 
         stage('Push to DockerHub') {
+            environment {
+                DOCKERHUB_USERNAME = credentials('dockerhub-username')
+                DOCKERHUB_PASSWORD = credentials('dockerhub-password')
+            }
             steps {
                 script {
                     sh """
