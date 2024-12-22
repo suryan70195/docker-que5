@@ -3,23 +3,14 @@ pipeline {
     environment {
         AWS_ACCOUNT_ID="140023400586"
         AWS_DEFAULT_REGION="ap-south-1"
-        IMAGE_REPO_NAME="jenkins-pipeline"
+        IMAGE_REPO_NAME="docker-pipeline"
         IMAGE_TAG="as1"
         REPOSITORY_URI = "140023400586.dkr.ecr.ap-south-1.amazonaws.com/dec-2025"
-        DOCKER_IMAGE = 'your-dockerhub-username/repo-name:latest'
+        DOCKER_IMAGE = 'yaqoobali/artisanclass:latest'
     }
    
     stages {
-        
-         stage('Logging into AWS ECR') {
-            steps {
-                script {
-                sh """aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"""
-                }
-                 
-            }
-        }
-        
+         
         stage('checkout') {
                     steps {
                          git branch: 'main', url: 'https://github.com/Yaqoob599/docker-dec-22.git'
