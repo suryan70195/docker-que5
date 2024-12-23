@@ -1,5 +1,5 @@
 
-FROM alpine:latest
+FROM ubuntu
 RUN apk update
-CMD ["echo", "Hello from Docker!"]
+CMD ["bash"]
 
