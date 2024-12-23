@@ -4,7 +4,7 @@ pipeline {
         AWS_ACCOUNT_ID = "515966525347"
         AWS_DEFAULT_REGION = "ap-south-1"
         IMAGE_REPO_NAME = "docker-pipeline"
-        IMAGE_TAG = "v1"
+        IMAGE_TAG = "v2"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/assignment"
         DOCKER_IMAGE = "shrikant712/docker:latest"
     }
