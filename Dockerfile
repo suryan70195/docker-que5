@@ -1,5 +1,5 @@
 
 FROM ubuntu
-RUN apk update
+RUN apk update -y
 CMD ["bash"]
 
