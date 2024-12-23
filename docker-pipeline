@@ -7,6 +7,7 @@ pipeline {
         IMAGE_TAG = "v2"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/assignment"
         DOCKER_IMAGE = "shrikant712/docker:latest"
+
     }
 
     stages {
@@ -40,6 +41,8 @@ pipeline {
         stage('Push to AWS ECR') {
             steps {
                 script {
+                    withEnv(["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}", "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}", "AWS_DEFAULT_REGION=${env.AWS_DEFAULT_REGION}"])
+{
                     sh """
                         aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | \
                         docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
@@ -47,6 +50,7 @@ pipeline {
                         docker push ${REPOSITORY_URI}:${IMAGE_TAG}
                     """
                 }
+}
             }
         }
     }
