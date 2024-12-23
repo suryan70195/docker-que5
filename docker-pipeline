@@ -4,15 +4,15 @@ pipeline {
         AWS_ACCOUNT_ID = "515966525347"
         AWS_DEFAULT_REGION = "ap-south-1"
         IMAGE_REPO_NAME = "docker-pipeline"
-        IMAGE_TAG = "as1"
-        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/dec-2025"
+        IMAGE_TAG = "v1"
+        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/assignment"
         DOCKER_IMAGE = "shrikant712/docker:latest"
     }
 
     stages {
         stage('Checkout Source Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/Yaqoob599/docker-dec-22.git'
+                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/Madhav0987/docker-dec-22.git'
             }
         }
 
@@ -27,8 +27,8 @@ pipeline {
         stage('Push to DockerHub') {
             steps {
                 script {
-                        withCredentials([string(credentialsId: 'dockerhub_password', variable: 'DOCKERHUB_PASSWORD')]) {
-                        sh 'docker login -u yaqoobali -p ${DOCKERHUB_PASSWORD}'
+                        withCredentials([string(credentialsId: 'Dockerhub-password', variable: 'Dockerhub')]) {
+                        sh 'docker login -u shrikant712 -p ${Dockerhub}'
 }
                         sh 'docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${DOCKER_IMAGE}'
                         sh 'docker push ${DOCKER_IMAGE}'
