@@ -1,12 +1,12 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCOUNT_ID = "140023400586"
+        AWS_ACCOUNT_ID = "515966525347"
         AWS_DEFAULT_REGION = "ap-south-1"
         IMAGE_REPO_NAME = "docker-pipeline"
         IMAGE_TAG = "as1"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/dec-2025"
-        DOCKER_IMAGE = "yaqoobali/artisanclass:latest"
+        DOCKER_IMAGE = "shrikant712/docker:latest"
     }
 
     stages {
