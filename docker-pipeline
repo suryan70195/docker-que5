@@ -7,7 +7,7 @@ pipeline {
         IMAGE_TAG = "version2"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/assignment"
         DOCKER_IMAGE = "kubersurya/assignment1:latest"
-    }
+      }
 
     stages {
         stage('Checkout Source Code') {
