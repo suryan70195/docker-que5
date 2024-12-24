@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                         withCredentials([string(credentialsId: 'Dockerhub-password', variable: 'Dockerhub')]) {
-                        sh 'docker login -u shrikant712 -p ${Dockerhub}'
+                        sh 'docker login -u kubersurya -p ${Dockerhub}'
 }
                         sh 'docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${DOCKER_IMAGE}'
                         sh 'docker push ${DOCKER_IMAGE}'
