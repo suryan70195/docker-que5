@@ -3,16 +3,25 @@ pipeline {
     environment {
         AWS_ACCOUNT_ID = "314146334258"
         AWS_DEFAULT_REGION = "us-east-1"
-        IMAGE_REPO_NAME = "dev/assingement"
-        IMAGE_TAG = "version2"
-        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/assignment"
-        DOCKER_IMAGE = "kubersurya/assignment1:latest"
-      }
+        IMAGE_REPO_NAME = "ques/5"
+        IMAGE_TAG = "latest"
+        REPOSITORY_URI = "314146334258.dkr.ecr.us-east-1.amazonaws.com/ques/5"
+        DOCKER_IMAGE = "ques/5:latest"
+
+    }
 
     stages {
+        
+        stage {
+            steps {
+                script {
+                    sh """aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 314146334258.dkr.ecr.us-east-1.amazonaws.com"""
+                }
+            }
+        }
         stage('Checkout Source Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/sudheer76R/java-example.git'
+                git branch: 'main', url: 'https://github.com/suryan70195/docker-que5.git'
             }
         }
 
@@ -24,39 +33,24 @@ pipeline {
             }
         }
 
-        stage('Push to DockerHub') {
+        stage('Push to ECR') {
             steps {
                 script {
-                        sh 'docker login -u kubersurya -p Suryachandu@123'
-                     }
-                        sh 'docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${DOCKER_IMAGE}'
-                        sh 'docker push ${DOCKER_IMAGE}'
+                        sh """docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${DOCKER_IMAGE}"""
+                        sh """docker push 314146334258.dkr.ecr.us-east-1.amazonaws.com/ques/5:latest"""
                     
                 }
             }
         }
 
-        stage('Push to AWS ECR') {
-            steps {
-                script {
-                    withEnv(["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}", "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}", "AWS_DEFAULT_REGION=${env.AWS_DEFAULT_REGION}"])
-{
-                    sh """
-                        aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | \
-                        docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
-                        docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:${IMAGE_TAG}
-                        docker push ${REPOSITORY_URI}:${IMAGE_TAG}
-                    """
-                }
-}
-            }
-        }
+       
 stage('Docker Run'){
-  steps{
-     script{
-	sh 'docker run -it -d $IMAGE_REPO_NAME:$IMAGE_TAG'
-	}
-      }
+				steps{
+					script{
+							sh 'docker run -it -d $IMAGE_REPO_NAME:$IMAGE_TAG'
+						}
+					}
+				}
+
     }
- }
 }
